@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="home.css">
+<title>Budget Calculator</title>
+<style>
+ /* Base styles */
+
+/* Nav- bar*/
+/* Add your styles for the dropdown */
+.dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    padding: 10px 0px; /* Adjust padding */
+    position: absolute;
+    background-color: rgba(30, 40, 78, 0.5);
+    z-index: 1;
+    transition: 0.3s;
+    border-radius: 10px;
+    width: 150px; /* Adjust width */
+    text-align: center; /* Center align the content */
+}
+
+/* Center align the links */
+.logout,
+.dlt-acc {
+    display: block;
+    padding: 5px;
+    color: white;
+    text-align: center;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    margin-top: 20px;
+}
+
+.downarrow{
+    font-size: 15px;
+}
+    
+
+
+.logout::after,
+.dlt-acc::after {
+content: "";
+display: block;
+height: 2px;
+width: 0;
+background-color: #f1f1f1;
+margin: 5px auto;
+}
+
+.logout:hover::after,
+.dlt-acc:hover::after {
+width: 80%;
+
+}
+
+
+.delete-button{
+    background-color: #f44336;
+    color: white;
+    padding: 5px 8px 5px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.delete-button:hover{
+    background-color: red;
+}
+    
+@media (max-width: 768px) {
+
+    .dropdown {
+    display: inline-block;
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(30, 40, 78, 0.5);
+    background-color: rgba(30, 40, 78, 0.5);
+    z-index: -1;
+    border-radius: 10px;
+    width: 90px;
+    margin-left: 13px;
+}
+
+.dropdown-content::after {
+    content: "";
+    display: block;
+    display: flex;
+    height: 2px;
+    width: 0;
+    background-color: #f1f1f1;
+    transition: width .3s;
+}
+
+.dropdown-content:hover::after {
+    width: 100%;
+}
+
+
+    .dropdown:hover .dropdown-content {
+    display: block;
+    margin-top: 20px;
+}
+}
+
+
+@media(max-width: 800px) {
+
+#logo{
+align-content: left;
+padding: 0px;
+margin-right: 10%;
+border-radius: 20%;
+}   
+
+.nav-items {
+display: none;
+flex-direction: column;
+width: 80px;
+text-align: center;
+position: absolute;
+top: 90px;
+left: 50%;
+background-color: rgba(30, 40, 78, 0.5);
+border-bottom-left-radius: 20px;
+border-bottom-right-radius: 20px;
+
+}
+
+.nav-items.show {
+align-items: center;
+display: flex;
+margin-right: 10%;
+padding-right: 10px;
+padding-left: 10px;
+}
+
+.navopt {
+align-content: center;
+padding: 10px;
+display: block;
+color: white;
+margin-bottom: 0px;
+padding-bottom: 0px;
+}
+
+.mobile-menu-icon {
+display: flex;
+margin-right: 10%;
+margin-bottom: 0px;
+padding-bottom: 0px;
+}
+}
+
+
+@media(max-width: 500px) {
+
+#logo{
+align-content: left;
+padding: 0px;
+margin-right: -8%;
+border-radius: 20%;
+}   
+
+.nav-items {
+display: none;
+flex-direction: column;
+width: 75px;
+text-align: center;
+position: absolute;
+top: 88px;
+left: 38%;
+background-color: rgba(30, 40, 78, 0.5);
+border-bottom-left-radius: 20px;
+border-bottom-right-radius: 20px;
+
+}
+
+.nav-items.show {
+display: flex;
+align-items: center;
+margin-right: 10px;
+padding-right: 10px;
+}
+
+.navopt {
+padding: 10px;
+display: block;
+color: white;
+}
+
+.mobile-menu-icon {
+display: flex;
+margin-right: 10%;
+margin-bottom: 0px;
+padding-bottom: 0px;
+}
+
+}
+
+/* body {
+  /* margin-top: 50px; */
+  /* font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200vh;
+} */ 
+
+/* Calculator container */
+ .budget-calculator {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 600px; /*Set a specific pixel value for better responsiveness */
+  margin: 0 auto; /* Center horizontally */
+  display: flex;
+  flex-wrap: wrap;
+}  
+
+/* Heading */
+.budget-calculator h2 {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Input groups */
+.input-group {
+  margin-bottom: 15px;
+  width: 45%;
+  margin-right: 5%;
+}
+
+ .input-group:nth-child(odd) {
+  margin-right: 0;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  width: calc(100% - 30px);
+  padding: 5px;
+  margin-right: 5px;
+}
+
+.input-group button {
+  width: 25px;
+  height: 25px;
+} 
+
+/* Summary section */
+ .summary {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.summary div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+/* Chart container */
+ .chart-container {
+  width: 40%;
+  margin-top: 10px;
+  margin-left: 20px; 
+}
+
+/* Styled input */
+ .styled-input {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* Buttons */
+ .calculate-button,
+.reset-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 30px;
+  font-size: 16px;
+}
+
+.calculate-button:hover,
+.reset-button:hover {
+  background-color: #45a049;
+} 
+
+/* Media queries */
+ @media only screen and (max-width: 768px) {
+  .budget-calculator {
+    flex-direction: column;
+    align-items: center;
+  }
+  .input-group {
+    width: 100%;
+    margin-right: 0;
+  }
+  .chart-container {
+    width: 100%;
+    margin-top: 20px;
+    margin-left: 0;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .budget-calculator {
+    padding: 10px;
+  }
+  .input-group {
+    margin-bottom: 10px;
+  }
+  .styled-input {
+    font-size: 14px;
+  }
+  .calculate-button,
+  .reset-button {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+</style>
+</style>
+</head>
+<body>
+  <header class="container">
+    <nav id="nav">
+        <a href="/index/"><img id="logo" src="{% static '/images/company-logo.jpg' %}" width="50" height="50" alt="Website Logo"></a>
+        <div class="mobile-menu-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-items" type="none">
+            <li><a href="/home" class="navopt">Home</a></li>
+            <li><a href="/budget" class="navopt">Budget</a></li>
+            <li><a href="/contact" class="navopt">Contact</a></li>
+            <li><a href="/about" class="navopt">About</a></li>
+            <li><a href="/logout" class="navopt" id="logoutlink">Logout</a></li>
+          
+        </ul>
+      </nav>
+  </header>
+
+<br><br><br>
+    <div class="budget-calculator">
+        <h2>Budget Calculator</h2>
+        <div class="input-group">
+          <label for="income">Enter Your Income</label>
+          <input type="text" id="income" placeholder="Monthly Income" class="styled-input">
+        </div>
+        <div class="input-group">
+          <label for="housing">Housing</label>
+          <input type="text" id="housing" placeholder="Housing" class="styled-input">
+        </div>
+        <div class="input-group">
+          <label for="food">Food</label>
+          <input type="text" id="food" placeholder="Food" class="styled-input">
+        </div>
+        <div class="input-group">
+          <label for="transportation">Transportation</label>
+          <input type="text" id="transportation" placeholder="Transportation" class="styled-input">
+        </div>
+        <div class="input-group">
+          <label for="education">Education</label>
+          <input type="text" id="education" placeholder="Education" class="styled-input">
+        </div>
+        <div class="input-group">
+          <label for="healthcare">Healthcare</label>
+          <input type="text" id="healthcare" placeholder="Healthcare" class="styled-input">
+        </div>
+        <div class="input-group">
+          <label for="personal">Personal & Family</label>
+          <input type="text" id="personal" placeholder="Personal & Family" class="styled-input">
+        </div>
+        <div class="input-group">
+          <label for="savings">Savings & Investments</label>
+          <input type="text" id="savings" placeholder="Savings & Investments" class="styled-input">
+        </div>
+        <button onclick="calculateTotal()" class="calculate-button" id="calculate-button">Calculate</button>
+        <button onclick="resetData()" class="reset-button">Reset</button>
+
+        <div class="summary">
+          <div><strong>Total Monthly Income:</strong> <span id="totalIncome">0</span></div>
+          <div><strong>Total Monthly Expenses:</strong> <span id="totalExpenses">0</span></div>
+          <div><strong>Remaining Money:</strong> <span id="remainingMoney">0</span></div>
+        </div>
+        <div class="chart-container">
+          <canvas id="expenseChart"></canvas>
+        </div>
+      </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="script1.js"></script>
+<script>
+  function adjustValue(id, value) {
+    const input = document.getElementById(id);
+    input.value = parseInt(input.value || 0) + value;
+    calculateTotal();
+  }
+
+  function calculateTotal() {
+    const income = parseInt(document.getElementById('income').value || 0);
+    const housing = parseInt(document.getElementById('housing').value || 0);
+    const food = parseInt(document.getElementById('food').value || 0);
+    const transportation = parseInt(document.getElementById('transportation').value || 0);
+    const education = parseInt(document.getElementById('education').value || 0);
+    const healthcare = parseInt(document.getElementById('healthcare').value || 0);
+    const personal = parseInt(document.getElementById('personal').value || 0);
+    const savings = parseInt(document.getElementById('savings').value || 0);
+
+    const totalExpenses = housing + food + transportation + education + healthcare + personal + savings;
+    const remainingMoney = income - totalExpenses;
+
+    document.getElementById('totalIncome').innerText = income;
+    document.getElementById('totalExpenses').innerText = totalExpenses;
+    document.getElementById('remainingMoney').innerText = remainingMoney;
+
+    updateChart(income, totalExpenses, remainingMoney);
+  }
+
+
+
+  function updateChart(income,totalExpenses, remainingMoney) {
+    const ctx = document.getElementById('expenseChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Total Income', 'Total Expenses', 'Remaining Money'],
+        datasets: [{
+          data: [income, totalExpenses, remainingMoney],
+          backgroundColor: ['#FF6B45', '#ff6384', '#36a2eb']
+        }]
+      },
+      options:{
+        responsive: true
+      }
+    });
+  }
+  function resetData() {
+    // Clear input fields
+    document.getElementById('income').value = '';
+    document.getElementById('housing').value = '';
+    document.getElementById('food').value = '';
+    document.getElementById('transportation').value = '';
+    document.getElementById('education').value = '';
+    document.getElementById('healthcare').value = '';
+    document.getElementById('personal').value = '';
+    document.getElementById('savings').value = '';
+
+    // Reset displayed values
+    document.getElementById("totalIncome").innerText = "0";
+    document.getElementById("totalExpenses").innerText = "0";
+    document.getElementById("remainingMoney").innerText = "0";
+
+    // Remove the pie chart
+    const chartContainer = document.querySelector('.chart-container');
+    if (chartContainer) {
+        chartContainer.innerHTML = '<canvas id="expenseChart"></canvas>';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
+    const navItems = document.querySelector('.nav-items');
+
+    mobileMenuIcon.addEventListener('click', function () {
+        navItems.classList.toggle('show');
+    });
+});
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Name</title>
+    <link rel="stylesheet" href="home.css">
+</head>
+    <style>
+
+        body{        
+            text-align: center;
+
+        }
+        #welcome{
+            padding: 9%;
+
+        }
+        /* Add your styles for the dropdown */
+        .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            padding: 10px 0px; /* Adjust padding */
+            position: absolute;
+            background-color: rgba(30, 40, 78, 0.5);
+            z-index: 1;
+            transition: 0.3s;
+            border-radius: 10px;
+            width: 150px; /* Adjust width */
+            text-align: center; /* Center align the content */
+        }
+
+        /* Center align the links */
+        .logout,
+        .dlt-acc {
+            display: block;
+            padding: 5px;
+            color: white;
+            text-align: center;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            margin-top: 20px;
+        }
+
+        .downarrow{
+            font-size: 15px;
+        }
+            
+
+
+        .logout::after,
+        .dlt-acc::after {
+        content: "";
+        display: block;
+        height: 2px;
+        width: 0;
+        background-color: #f1f1f1;
+        margin: 5px auto;
+    }
+
+    .logout:hover::after,
+    .dlt-acc:hover::after {
+        width: 80%;
+
+    }
+
+
+        .delete-button{
+            background-color: #f44336;
+            color: white;
+            padding: 5px 8px 5px 8px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .delete-button:hover{
+            background-color: red;
+        }
+            
+        @media (max-width: 768px) {
+
+            .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 40, 78, 0.5);
+            background-color: rgba(30, 40, 78, 0.5);
+            z-index: -1;
+            border-radius: 10px;
+            width: 90px;
+            margin-left: 13px;
+        }
+
+        .dropdown-content::after {
+            content: "";
+            display: block;
+            display: flex;
+            height: 2px;
+            width: 0;
+            background-color: #f1f1f1;
+            transition: width .3s;
+        }
+
+        .dropdown-content:hover::after {
+            width: 100%;
+        }
+
+
+            .dropdown:hover .dropdown-content {
+            display: block;
+            margin-top: 20px;
+        }
+        }
+
+        
+@media(max-width: 800px) {
+    
+    #logo{
+        align-content: left;
+        padding: 0px;
+        margin-right: 10%;
+        border-radius: 20%;
+    }   
+    
+    .nav-items {
+        display: none;
+        flex-direction: column;
+        width: 80px;
+        text-align: center;
+        position: absolute;
+        top: 90px;
+        left: 50%;
+        background-color: rgba(30, 40, 78, 0.5);
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+
+    }
+
+    .nav-items.show {
+        align-items: center;
+        display: flex;
+        margin-right: 10%;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .navopt {
+        align-content: center;
+        padding: 10px;
+        display: block;
+        color: white;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+
+    .mobile-menu-icon {
+        display: flex;
+        margin-right: 10%;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+}
+
+
+@media(max-width: 500px) {
+    
+    #logo{
+        align-content: left;
+        padding: 0px;
+        margin-right: -8%;
+        border-radius: 20%;
+    }   
+    
+    .nav-items {
+        display: none;
+        flex-direction: column;
+        width: 75px;
+        text-align: center;
+        position: absolute;
+        top: 88px;
+        left: 38%;
+        background-color: rgba(30, 40, 78, 0.5);
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+
+    }
+
+    .nav-items.show {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        padding-right: 10px;
+    }
+
+    .navopt {
+        padding: 10px;
+        display: block;
+        color: white;
+    }
+
+    .mobile-menu-icon {
+        display: flex;
+        margin-right: 10%;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+
+}
+
+
+    </style>
+
+</head>
+
+<body>
+    <!-- Navigation Bar -->   
+     
+    <header class="container">
+        <nav id="nav">
+            <a href="/index/"><img id="logo" src="{% static '/images/company-logo.jpg' %}" width="50" height="50" alt="Website Logo"></a>
+            <div class="mobile-menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-items" type="none">
+                <li><a href="home.html" class="navopt">Home</a></li>
+                <li><a href="Budget.html" class="navopt">Budget</a></li>
+                <li><a href="/contact" class="navopt">Contact</a></li>
+                <li><a href="/about" class="navopt">About</a></li>
+                <li><a href="/logout" class="navopt" id="logoutlink">Logout</a></li>
+              
+            </ul>
+    </div>
+</li>
+</ul>
+
+</nav>
+</header>
+<body>
+    <div id="welcome">
+    <h1>Welcome to Our Website!</h1>
+    <p>Thank you for visiting. Feel free to explore our content.</p>
+</div>
+</body>
+
+<script src="script1.js"></script>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-columns">
+            <div class="footer-column1">
+                <p>Email: <a href="mailto:#">nothing@gmail.com</a> </p>
+                <p>Phone: <a href="tel:#">+91 2568456239</a> </p>
+            </div>
+            <div class="footer-column2">
+                <ul class="foot-list"> 
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="/budget">Services</a></li>
+                    <li><a href="/about/">About</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column3">
+                <img src="/static/images/company-logo.jpg" alt="Company Logo" style="width: 70px; height: 70px;">
+                <p>FinCred</p>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>
+
+
+
+
+
+
+<!--
+<form role="search">
+                    {% if request.user.is_authenticated %}
+                        <button type="submit" formaction="/logout/" class="navopt">Logout</button>
+                    {% else %}
+                        <button type="submit" formaction="/Login/" class="navopt">Login</button>
+                    {% endif %}
+                    
+                </form>
+
+-->
