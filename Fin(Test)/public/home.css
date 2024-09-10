@@ -376,7 +376,6 @@ footer {
         opacity: 1;
     }
 }
-/*yahoo password:  bigbangtheory */
 
 
 /* Style for the profile button */
@@ -411,9 +410,11 @@ footer {
 .profile-info {
     display: flex;
     flex-direction: column; /* Display name and email in a column */
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-top: 2%;
+    padding-bottom: 2%;
     margin-bottom: 1rem;
+    
+    border-bottom: 3px solid black;
 }
 
 .profile-label {

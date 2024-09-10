@@ -262,7 +262,7 @@ form {
 }
 
 #username,
-#email,
+#Email,
 #phone{
     padding: 10px 30px;
     border-radius: 40px;
@@ -284,7 +284,7 @@ form {
 }
 
 #username,
-#email,
+#Email,
 #phone,
 #message {
     margin-left: -40%;
@@ -308,7 +308,7 @@ form {
 }
 
 #username,
-#email,
+#Email,
 #phone{
     padding: 10px 12px 10px 12px;
     border-radius: 40px;
@@ -546,8 +546,7 @@ footer {
             </ul>
         </nav>
     </header>
-    <!-- contact page is not accepting this profile contain , don't why -->
-     <!-- Remove this profile div , it will properly   -->
+    
     <!--            Get In Touch               -->
 
     <div id="contact">
@@ -557,7 +556,7 @@ footer {
         <form id="contactForm" method="post">
             <input id="username" name="name" type="text" placeholder="Name">
             <br>
-            <input id="email" name="email" type="email" placeholder="Email">
+            <input id="Email" name="email" type="email" placeholder="Email">
             <br>
             <input id="phone" name="phone" type="text" placeholder="Phone No">
             <br>
@@ -571,24 +570,24 @@ footer {
 
     <div id="profilePopup" class="popup">
         <div class="profile-info">
-            <span class="profile-label">Name:</span>
-            <span id="name" class="profile-value"></span>
+            <span class="profile-label" style="color: white;">N:</span>
+            <span id="name" class="profile-value" style="color: white;"></span>
         </div>
         <div class="profile-info">
-            <span class="profile-label">Email:</span>
-            <span id="email" class="profile-value"></span>
+            <span class="profile-label" style="color: white;">E:</span>
+            <span id="email" class="profile-value" style="color: white;"></span>
         </div>
-    
+
         <div class="profile-info">
-            <span class="profile-label">Job_profile:</span>
-            <span id="jobProfile" class="profile-value"></span>
+            <span class="profile-label" style="color: white;">J:</span>
+            <span id="jobProfile" class="profile-value" style="color: white;"></span>
         </div>
-    
+
         <div class="profile-info">
-            <span class="profile-label">Salary:</span>
-            <span id="salary" class="profile-value"></span>
+            <span class="profile-label" style="color: white;">S:</span>
+            <span id="salary" class="profile-value" style="color: white;"></span>
         </div>
-    
+
         <button id="logoutButton">Logout</button>
         <button id="deleteButton" class="delete-button">Delete Account</button> 
     </div>
@@ -599,7 +598,7 @@ footer {
             e.preventDefault();
 
             const name = document.getElementById('username').value;
-            const email = document.getElementById('email').value;
+            const email = document.getElementById('Email').value;
             const phone = document.getElementById('phone').value;
             const message = document.getElementById('message').value;
 

@@ -11,7 +11,7 @@
     top: 30%;
     left: 90%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
+    background-color:transparent blue;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10%;
@@ -40,8 +40,8 @@
         .profile-info {
             display: flex;
             flex-direction: column; /* Display name and email in a column */
-            padding-top: 5%;
-            padding-bottom: 5%;
+            padding-top: 2%;
+            padding-bottom: 2%;
             margin-bottom: 1rem;
         }
         
@@ -49,10 +49,8 @@
             font-weight: bold;
         }
         
-        /* Add media queries for responsiveness */
         @media (max-width: 768px) {
             .popup {
                 width: 80vw; /* Adjust for smaller screens */
             }
         }
-        

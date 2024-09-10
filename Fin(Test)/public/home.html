@@ -246,10 +246,11 @@
     top: 30%;
     left: 90%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
+    background-color:transparent blue;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 10%;
+    border: 2px solid white;
     z-index: 1000;
 }
 
@@ -285,6 +286,17 @@
         .delete-button:hover{
             background-color: red;
         }
+        .profile-label {
+            font-weight: bold;
+        }
+        
+        /* Add media queries for responsiveness */
+        @media (max-width: 768px) {
+            .popup {
+                width: 80vw; /* Adjust for smaller screens */
+            }
+        }
+        
 
     </style>
 
@@ -318,22 +330,22 @@
     </div>
     <div id="profilePopup" class="popup">
         <div class="profile-info">
-            <span class="profile-label">Name:</span>
-            <span id="name" class="profile-value"></span>
+            <span class="profile-label" style="color: white;">N:</span>
+            <span id="name" class="profile-value" style="color: white;"></span>
         </div>
         <div class="profile-info">
-            <span class="profile-label">Email:</span>
-            <span id="email" class="profile-value"></span>
-        </div>
-
-        <div class="profile-info">
-            <span class="profile-label">Job_profile:</span>
-            <span id="jobProfile" class="profile-value"></span>
+            <span class="profile-label" style="color: white;">E:</span>
+            <span id="email" class="profile-value" style="color: white;"></span>
         </div>
 
         <div class="profile-info">
-            <span class="profile-label">Salary:</span>
-            <span id="salary" class="profile-value"></span>
+            <span class="profile-label" style="color: white;">J:</span>
+            <span id="jobProfile" class="profile-value" style="color: white;"></span>
+        </div>
+
+        <div class="profile-info">
+            <span class="profile-label" style="color: white;">S:</span>
+            <span id="salary" class="profile-value" style="color: white;"></span>
         </div>
 
         <button id="logoutButton">Logout</button>
@@ -362,6 +374,18 @@
             </div>
         </div>
     </footer>
+    <script>
+  
+        document.addEventListener('DOMContentLoaded', function () {
+        const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
+        const navItems = document.querySelector('.nav-items');
+      
+        mobileMenuIcon.addEventListener('click', function () {
+            navItems.classList.toggle('show');
+        });
+      });
+      
+      </script>
 
 </body>
 </html>
