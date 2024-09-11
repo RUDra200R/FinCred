@@ -7,16 +7,14 @@
     <title>SplitMate</title>
     <link rel="stylesheet" href="profile.css">
     <style>
-/* body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-} */
+body {
+  background-image: url("./splitMate.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0px; 
+  padding: 0px;
+} 
 
 .container {
     margin-top: 10%;
@@ -340,13 +338,13 @@ input {
 
     /*responsive style*/
     @media (max-width: 768px) {
-        .container{
-            margin-top: 5%;
-            margin-right: 3%;
-            width: 95%;
-        }
-        
+    .container {
+        margin-top: 8%;
+        width: 85%;
+        margin-left: 2%;
+        margin-bottom: 8%;
     }
+}
 }
 /*          Footer          */
 
@@ -519,13 +517,13 @@ footer {
         <form id="expense-form">
             <input type="text" id="group-name" placeholder="Group Name" required>
             <input type="text" id="expense-description" placeholder="Expense Description" required>
-            <input type="number" id="expense-amount" placeholder="Amount" required>
+            <input type="number" id="expense-amount" placeholder="Amount in INR" required>
             <input type="number" id="num-members" placeholder="Number of Members" required>
             <div id="members-input-container"></div>
-            <button type="submit" id="button1">Add Expense</button>
+            <button type="submit" id="button1">Add Expense & Send Notification</button>
         </form>
         <div id="expense-list">
-            <!-- List of shared expenses will be rendered here -->
+            <!-- List of shared expense  -->
         </div>
     </div>
      <!-- Footer -->
@@ -552,47 +550,38 @@ footer {
     <script src="script.js"></script>
     <script src="script1.js"></script>
     <script>
-        // SplitMate
-        document.getElementById('num-members').addEventListener('input', (e) => {
-        const numMembers = parseInt(e.target.value);
-        const membersContainer = document.getElementById('members-input-container');
-        membersContainer.innerHTML = ''; // Clear previous inputs
+       // SplitMate
+       let lastValidNumMembers = 0; // To keep track of the last valid input
 
-        // Check if the input value is a valid number
-        if (!isNaN(numMembers) && numMembers > 0) {
-            for (let i = 0; i < numMembers; i++) {
-                const input = document.createElement('input');
-                input.type = 'email';
-                input.placeholder = `Email of Member ${i + 1}`;
-                input.required = true;
-                input.className = 'member-email';
-                membersContainer.appendChild(input);
-            }
-        } else {
-            console.error('Invalid number of members:', numMembers);
-        }
-    });
+document.getElementById('num-members').addEventListener('input', (e) => {
+    const numMembers = parseInt(e.target.value);
+    const membersContainer = document.getElementById('members-input-container');
+    membersContainer.innerHTML = ''; // Clear previous inputs
+    if (numMembers > 20 || numMembers <= 0 || isNaN(numMembers)) {
+    let message = numMembers > 20 
+        ? 'You can add a maximum of 20 members.' 
+        : 'Number of members should be greater than 0.';
+        
+    alert(message);
+    e.target.value = lastValidNumMembers; // Revert to the last valid value
+    return;
+}
 
-    // Send notification for a specific expense
-const sendNotification = async (expenseId) => {
-    try {
-        const response = await fetch(`/api/auth/shared-expenses/${expenseId}/notify`, {
-            method: 'POST'
-        });
+    // Update the last valid input when the current input is correct
+    lastValidNumMembers = numMembers;
 
-        const result = await response.json();
-        if (response.ok) {
-            alert(result.message);
-        } else {
-            alert(result.message);
-        }
-    } catch (error) {
-        console.error('Error sending notification:', error);
+    // Create email input fields for each member
+    for (let i = 0; i < numMembers; i++) {
+        const input = document.createElement('input');
+        input.type = 'email';
+        input.placeholder = `Email of Member ${i + 1}`;
+        input.required = true;
+        input.className = 'member-email';
+        membersContainer.appendChild(input);
     }
-};
+});
 
-
-    // Event listener for form submission to add a shared expense
+    // Event listener for form submission to add a shared expense and send notifications
     document.getElementById('expense-form').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -601,6 +590,11 @@ const sendNotification = async (expenseId) => {
         const amount = parseFloat(document.getElementById('expense-amount').value);
         const emails = Array.from(document.querySelectorAll('.member-email')).map(input => input.value.trim());
 
+        // Validate the amount
+        if (amount <= 0 || isNaN(amount)) {
+    alert('Amount should be greater than 0.');
+    return;
+}
         // Validate the inputs before making the request
         if (!groupName || !description || isNaN(amount) || amount <= 0 || emails.some(email => !email)) {
             alert('Please ensure all fields are filled in correctly.');
@@ -611,6 +605,7 @@ const sendNotification = async (expenseId) => {
         const expenseData = { groupName, description, amount, emails };
 
         try {
+            // Send a single request to add the expense and notify members
             const response = await fetch('/api/auth/shared-expenses', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -619,51 +614,54 @@ const sendNotification = async (expenseId) => {
 
             const result = await response.json();
             if (response.ok) {
-                alert('Expense added successfully!');
+                alert('Expense added and notifications sent successfully!');
                 renderExpenses(result.expenses);
             } else {
                 console.error('Error response from server:', result);
                 alert(result.message);
             }
         } catch (error) {
-            console.error('Error adding expense:', error);
-            alert('An error occurred while adding the expense.');
+            console.error('Error adding expense and sending notifications:', error);
+            alert('An error occurred while adding the expense and sending notifications.');
         }
     });
 
     // Fetch existing expenses from the server
     async function fetchExpenses() {
-        try {
-            const response = await fetch('/api/auth/shared-expenses');
-            const data = await response.json();
-            if (response.ok) {
-                renderExpenses(data.expenses);
-            } else {
-                console.error('Error fetching expenses:', data);
-            }
-        } catch (error) {
-            console.error('Error fetching expenses:', error);
+    try {
+        const response = await fetch('/api/auth/shared-expenses');
+        const data = await response.json();
+        if (response.ok) {
+            renderExpenses(data.expenses);
+        } else {
+            console.error('Error fetching expenses:', data);
         }
+    } catch (error) {
+        console.error('Error fetching expenses:', error);
     }
+}
 
-    // Render expenses onto the page
-    function renderExpenses(expenses) {
-        const expenseList = document.getElementById('expense-list');
-        expenseList.innerHTML = '';
-        expenses.forEach(expense => {
-            const div = document.createElement('div');
-            div.className = 'expense-item';
-            div.innerHTML = `
-                <div>${expense.groupName} - ${expense.description}</div>
-                <div>$${expense.amount.toFixed(2)} (Split among: ${expense.emails.length} members)</div>
-                <button onclick="sendNotification('${expense._id}')">Send Notification</button>
-            `;
-            expenseList.appendChild(div);
-        });
-    }
+// Render only the last three expenses onto the page
+function renderExpenses(expenses) {
+    const expenseList = document.getElementById('expense-list');
+    expenseList.innerHTML = '';
 
-    // Initial fetch of expenses when the page loads
-    fetchExpenses();
+    // Get the last three expenses
+    const lastThreeExpenses = expenses.slice(-3);
+    
+    lastThreeExpenses.forEach(expense => {
+        const div = document.createElement('div');
+        div.className = 'expense-item';
+        div.innerHTML = `
+            <div>${expense.groupName} - ${expense.description}</div>
+            <div>₹${expense.amount.toFixed(2)} (Split among: ${expense.emails.length} members)</div>
+        `;
+        expenseList.appendChild(div);
+    });
+}
+
+// Initial fetch of expenses when the page loads
+fetchExpenses();
 </script>
 
     </script>

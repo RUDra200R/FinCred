@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const ExpenseSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true, // Make sure this field is always populated from the logged-in user
+    },
     groupName: {
         type: String,
         required: true,

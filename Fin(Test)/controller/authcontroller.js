@@ -178,8 +178,9 @@ const calculateBudget = async (req, res) => {
     try {
         const totalExpenses = housing + food + transportation + education + healthcare + personal + savings;
         const remainingMoney = income - totalExpenses;
-
+        const username = req.user.username;
         const newBudget = new Budget({
+            username,
             income,
             housing,
             food,
@@ -217,8 +218,23 @@ const calculateBudget = async (req, res) => {
 const submitContactForm = async (req, res) => {
     const { name, email, phone, message } = req.body;
 
+    // Validate required fields
+    if (!name || !email || !message) {
+        return res.status(400).json({ message: 'Name, email, and message are required.' });
+    }
+
     try {
-        const newContact = new Contact({ name, email, phone, message });
+        // Automatically get the username from the logged-in user
+        const username = req.user.username; // Assuming req.user is populated by authentication middleware
+
+        const newContact = new Contact({
+            name,
+            email,
+            phone,
+            message,
+            username, // Add the username to the contact
+        });
+
         await newContact.save();
         res.status(201).json({ message: 'Contact form submitted successfully' });
     } catch (err) {
@@ -227,7 +243,7 @@ const submitContactForm = async (req, res) => {
 };
 
 //splitMate
-const addSharedExpense = async (req, res) => {
+const addExpenseAndNotify = async (req, res) => {
     const { groupName, description, amount, emails } = req.body;
 
     // Check if all required fields are provided and validate types
@@ -236,40 +252,22 @@ const addSharedExpense = async (req, res) => {
     }
 
     try {
-        // Create a new expense document
-        const newExpense = new Expense({ groupName, description, amount, emails });
+        // Automatically get the username from the logged-in user
+        const username = req.user.username; // Assuming req.user is populated from a middleware
+
+        // Create a new expense document with the username
+        const newExpense = new Expense({
+            username,
+            groupName,
+            description,
+            amount,
+            emails
+        });
+
         await newExpense.save();
 
-        // Fetch all expenses to update the expense list
-        const expenses = await Expense.find();
-
-        // Return a success response with the updated list of expenses
-        res.status(201).json({ message: 'Expense added successfully.', expenses });
-    } catch (err) {
-        // Return a server error message if something goes wrong
-        console.error('Error adding expense:', err);
-        res.status(500).json({ message: 'Error adding expense.', error: err.message });
-    }
-};
-
-
-// Send notifications with individual share amounts
-const sendNotification = async (req, res) => {
-    const { expenseId } = req.params;
-
-    try {
-        // Find the expense by ID
-        const expense = await Expense.findById(expenseId);
-        if (!expense) {
-            return res.status(404).json({ message: 'Expense not found' });
-        }
-
-        // Calculate each member's share
-        const totalAmount = expense.amount;
-        const emails = expense.emails;
-        const memberShare = totalAmount / emails.length;
-
-        // Send notifications to each member
+        // Send notifications to each member about their share
+        const memberShare = amount / emails.length;
         for (const email of emails) {
             // Validate email format if necessary
             if (!isValidEmail(email)) {
@@ -280,12 +278,12 @@ const sendNotification = async (req, res) => {
             const mailOptions = {
                 from: process.env.EMAIL_USER,
                 to: email,
-                subject: `SplitMate Notification: ${expense.groupName}`,
+                subject: `SplitMate Notification: ${groupName}`,
                 text: `Hello,
 
-You have a new shared expense: "${expense.description}" in the group "${expense.groupName}". 
-Total expense: $${totalAmount.toFixed(2)}.
-Your share: $${memberShare.toFixed(2)}.
+You have a new shared expense: "${description}" in the group "${groupName}". 
+Total expense: ₹${amount.toFixed(2)}.
+Your share: ₹${memberShare.toFixed(2)}.
 
 Please settle your part of the shared expense at your earliest convenience.
 
@@ -295,16 +293,23 @@ Thank you!`
             // Send email and handle errors
             try {
                 await transporter.sendMail(mailOptions);
-                console.log(`Notification sent to ${email}`);
             } catch (emailError) {
                 console.error(`Error sending email to ${email}:`, emailError);
             }
         }
 
-        res.status(200).json({ message: 'Notifications sent successfully' });
+        // Fetch all expenses to update the expense list
+        const expenses = await Expense.find();
+
+        // Return a success response with the updated list of expenses
+        res.status(201).json({
+            message: 'Expense added and notifications sent successfully.',
+            expenses
+        });
     } catch (err) {
-        console.error('Server error:', err);
-        res.status(500).json({ message: 'Server error', error: err.message });
+        // Return a server error message if something goes wrong
+        console.error('Error adding expense:', err);
+        res.status(500).json({ message: 'Error adding expense.', error: err.message });
     }
 };
 
@@ -315,4 +320,5 @@ const isValidEmail = (email) => {
 };
 
 
-module.exports = { register, login, logout, submitContactForm, calculateBudget, sendOtp, resetPassword, getProfileData, deleteAccount, addSharedExpense, sendNotification };
+
+module.exports = { register, login, logout, submitContactForm, calculateBudget, sendOtp, resetPassword, getProfileData, deleteAccount, addExpenseAndNotify };
