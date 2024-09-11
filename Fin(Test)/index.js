@@ -49,6 +49,9 @@ app.get('/otp', (req, res) => {
 app.get('/password', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'resetpassword.html'));
 });
+app.get('/split', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'splitMate.html'));
+});
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

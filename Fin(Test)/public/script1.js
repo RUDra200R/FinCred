@@ -229,4 +229,3 @@ document.getElementById('deleteButton').addEventListener('click', async function
         alert('An error occurred while trying to delete your account. Please try again later.');
     }
 });
-
