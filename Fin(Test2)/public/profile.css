@@ -1,0 +1,60 @@
+#profileButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    background-color:transparent blue;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10%;
+    border: 2px solid white;
+    z-index: 1000;
+}
+
+.popup.active {
+    display: block;
+}
+
+        #logoutButton {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        #logoutButton:hover {
+            background-color: darkred;
+        }
+        .profile-info {
+            display: flex;
+            flex-direction: column; /* Display name and email in a column */
+            padding-top: 2%;
+            padding-bottom: 2%;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid black;
+        }
+        
+        .profile-label {
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .popup {
+                top: 40%;
+                margin-right: 50%;
+                width: 50vw; /* Adjust for smaller screens */
+            }
+        }

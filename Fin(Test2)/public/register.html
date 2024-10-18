@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <form id="registerForm">
+                <div id="messageContainer" class="message-container"></div>
+                <h2>Register</h2>
+                <div class="input-group">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="name" placeholder="Name" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-briefcase"></i>
+                    <input type="text" id="jobProfile" placeholder="Job Profile" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-dollar-sign"></i>
+                    <input type="text" id="salary" placeholder="Salary" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit">Register</button>
+                <p class="login-link">Already a member? <a href="/">Login now</a></p>
+            </form>
+        </div>
+    </div>
+    <script src="script1.js"></script>
+</body>
+</html>

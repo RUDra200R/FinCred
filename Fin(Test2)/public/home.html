@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinCred</title>
+    <link rel="icon" href="./company-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="home.css">
+
+    <style>
+
+        body{        
+            text-align: center;
+            background-image: url("./background.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Roboto Serif', serif;
+            margin: 0px; 
+            padding: 0px;
+
+        }
+        #welcome{
+            padding: 9%;
+            color: #FFB000
+
+        }
+        /* Add your styles for the dropdown */
+        .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            padding: 10px 0px; /* Adjust padding */
+            position: absolute;
+            background-color: rgba(30, 40, 78, 0.5);
+            z-index: 1;
+            transition: 0.3s;
+            border-radius: 10px;
+            width: 150px; /* Adjust width */
+            text-align: center; /* Center align the content */
+        }
+
+        /* Center align the links */
+        .logout,
+        .dlt-acc {
+            display: block;
+            padding: 5px;
+            color: white;
+            text-align: center;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            margin-top: 20px;
+        }
+
+        .downarrow{
+            font-size: 15px;
+        }
+            
+
+
+        .logout::after,
+        .dlt-acc::after {
+        content: "";
+        display: block;
+        height: 2px;
+        width: 0;
+        background-color: #f1f1f1;
+        margin: 5px auto;
+    }
+
+    .logout:hover::after,
+    .dlt-acc:hover::after {
+        width: 80%;
+
+    }
+
+
+        .delete-button{
+            background-color: #f44336;
+            color: white;
+            padding: 5px 8px 5px 8px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .delete-button:hover{
+            background-color: red;
+        }
+            
+        @media (max-width: 768px) {
+
+            .dropdown {
+            display: inline-block;
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 40, 78, 0.5);
+            background-color: rgba(30, 40, 78, 0.5);
+            z-index: -1;
+            border-radius: 10px;
+            width: 90px;
+            margin-left: 13px;
+        }
+
+        .dropdown-content::after {
+            content: "";
+            display: block;
+            display: flex;
+            height: 2px;
+            width: 0;
+            background-color: #f1f1f1;
+            transition: width .3s;
+        }
+
+        .dropdown-content:hover::after {
+            width: 100%;
+        }
+
+
+            .dropdown:hover .dropdown-content {
+            display: block;
+            margin-top: 20px;
+        }
+        }
+
+        
+@media(max-width: 800px) {
+    
+    #logo{
+        align-content: left;
+        background-color: white;
+        padding: 0px;
+        margin-right: 10%;
+        border-radius: 20%;
+    }   
+    
+    .nav-items {
+        display: none;
+        flex-direction: column;
+        width: 80px;
+        text-align: center;
+        position: absolute;
+        top: 90px;
+        left: 50%;
+        background-color: rgba(30, 40, 78, 0.5);
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+
+    }
+
+    .nav-items.show {
+        align-items: center;
+        display: flex;
+        margin-right: 10%;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .navopt {
+        align-content: center;
+        padding: 10px;
+        display: block;
+        color: white;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+
+    .mobile-menu-icon {
+        display: flex;
+        margin-right: 10%;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+}
+
+
+@media(max-width: 500px) {
+    
+    #logo{
+        align-content: left;
+        background-color: white;
+        padding: 0px;
+        margin-right: -8%;
+        border-radius: 20%;
+    }   
+    
+    .nav-items {
+        display: none;
+        flex-direction: column;
+        width: 75px;
+        text-align: center;
+        position: absolute;
+        top: 88px;
+        left: 38%;
+        background-color: rgba(30, 40, 78, 0.5);
+        border-bottom-left-radius: 20px;
+        border-bottom-right-radius: 20px;
+
+    }
+
+    .nav-items.show {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+        padding-right: 10px;
+    }
+
+    .navopt {
+        padding: 10px;
+        display: block;
+        color: white;
+    }
+
+    .mobile-menu-icon {
+        display: flex;
+        margin-right: 10%;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+
+}
+/* profile data*/
+        #profileButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 30%;
+    left: 90%;
+    transform: translate(-50%, -50%);
+    background-color:transparent blue;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10%;
+    border: 2px solid white;
+    z-index: 1000;
+}
+
+.popup.active {
+    display: block;
+}
+
+        #logoutButton {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .delete-button{
+            background-color: #f44336;
+            color: white;
+            padding: 5px 8px 5px 8px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 10px;
+        }
+
+        .delete-button:hover{
+            background-color: red;
+        }
+        .profile-label {
+            font-weight: bold;
+        }
+        
+        /* Add media queries for responsiveness */
+        @media (max-width: 768px) {
+            .popup {
+                width: 50vw; /* Adjust for smaller screens */
+            }
+        }
+        
+@media(min-width: 800px)
+{
+    .centeredtext{
+    font-family: sans-serif;
+    font-size: 45px;
+    color: #FFB000;
+    
+    animation: SocialAni 1s ease forwards;
+    animation-delay: calc(.2s * var(--socialAni));
+}
+}
+    </style>
+
+</head>
+
+<body>
+    <!-- Navigation Bar -->   
+     
+    <header class="container">
+        <nav id="nav">
+            <a href="/home"><img id="logo" src="./company-logo.png" width="60" height="60" alt="Website Logo"></a>
+            <div class="mobile-menu-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-items" type="none">
+                <li><a href="/home" class="navopt">Home</a></li>
+                <li><a href="/budget" class="navopt">Budget</a></li>
+                <li><a href="/split" class="navopt">SplitMate</a></li>
+                <li><a href="/contact" class="navopt">Contact</a></li>
+                <li><a href="/histroy" class="navopt">History</a></li>
+                <li>
+                    <!-- Profile Button -->
+                    <button id="profileButton">Profile</button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div id="welcome">
+    <h1>Welcome to FinCred!</h1>
+    <p class="centerbelowtext">This platform allows users to manage their personal finances,
+        track expenses, set budgets. It includes features for real-time
+        financial data, analytics.</p>
+    </div>
+    <div id="profilePopup" class="popup">
+        <div class="profile-info">
+            <span id="name" class="profile-value" style="color: white;"></span>
+        </div>
+        <div class="profile-info">
+            <span id="email" class="profile-value" style="color: white;"></span>
+        </div>
+
+        <div class="profile-info">
+            <span id="jobProfile" class="profile-value" style="color: white;"></span>
+        </div>
+
+        <div class="profile-info">
+            <span id="salary" class="profile-value" style="color: white;"></span>
+        </div>
+
+        <button id="logoutButton">Logout</button>
+        <button id="deleteButton" class="delete-button">Delete Account</button> 
+    </div>
+<script src="script.js"></script>
+<script src="script1.js"></script>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-columns">
+            <div class="footer-column1">
+                <p>Email: <a href="mailto:#">fincred172@gmail.com</a> </p>
+                <p>Phone: <a href="tel:#">+91 2568456239</a> </p>
+            </div>
+            <div class="footer-column2">
+                <ul class="foot-list"> 
+                    <li><a href="/home">Home</a></li>
+                    <li><a href="/budget">Budget</a></li>
+                    <li><a href="/split">SplitMate</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                    <li><a href="/histroy">History</a></li>
+                </ul>
+            </div>
+            <div class="footer-column3">
+                <img src="./company-logo.png" alt="Company Logo" style="width: 70px; height: 70px;">
+                <p>FinCred</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+
+// Appearing Text
+function animateTextAppearance() {
+    var textElements = document.querySelectorAll('.centerbelowtext');
+    textElements.forEach(element => {
+        const text = element.innerText;
+        element.innerHTML = '';
+        for (let i = 0; i < text.length; i++) {
+            const letter = text[i];
+            const span = document.createElement('span');
+            span.textContent = letter;
+            span.className = 'hidden';
+            element.appendChild(span);
+            span.style.animation = `appear 0.1s forwards ${i * 0.18}s`;
+        }
+    });
+}
+
+// Call the function initially
+animateTextAppearance();
+
+// Repeat the animation every 1 second (1000 milliseconds)
+setInterval(animateTextAppearance, 25000);
+
+  
+        document.addEventListener('DOMContentLoaded', function () {
+        const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
+        const navItems = document.querySelector('.nav-items');
+      
+        mobileMenuIcon.addEventListener('click', function () {
+            navItems.classList.toggle('show');
+        });
+      });
+      
+      </script>
+
+</body>
+</html>
+
+

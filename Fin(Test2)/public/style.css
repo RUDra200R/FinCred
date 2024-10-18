@@ -1,0 +1,190 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('./login-background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    image-rendering: -webkit-optimize-contrast; /* For WebKit browsers */
+    image-rendering: crisp-edges;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-container {
+    background: ghostwhite;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.input-group i {
+    margin-right: 10px;
+    color: grey; /* Change icon color to grey */
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    width: 80%;
+    margin: auto;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+h2 {
+    margin-top: 5px;
+    margin: auto;    
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: 10px;
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.signup-link {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.signup-link a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.signup-link a:hover {
+    text-decoration: underline;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.login-link a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+
+@media (max-width: 600px) {
+    .form-container {
+        width: 100%;
+        padding: 10px;
+    }
+}
+
+/* Style for the profile button */
+#profileButton {
+    background-color: transparent;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+/* Profile Popup Styling */
+
+.popup {
+    display: none;
+    position: fixed;
+    margin-left: 80%;
+    top: 10px;
+    right: 10%;
+    background-color: #fff;
+    padding: 1.5rem; /* Use relative units */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    z-index: 1000;
+    width: 30vw; /* Use viewport units */
+    max-width: 400px; /* Limit maximum width */
+}
+
+.popup.active {
+    display: block;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column; /* Display name and email in a column */
+    padding-top: 5%;
+    padding-bottom: 5%;
+    margin-bottom: 1rem;
+}
+
+.profile-label {
+    font-weight: bold;
+}
+
+/* Add media queries for responsiveness */
+@media (max-width: 768px) {
+    .popup {
+        width: 80vw; /* Adjust for smaller screens */
+    }
+}
+
+
+#logoutButton {
+    background-color: red;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+#logoutButton:hover {
+    background-color: darkred;
+}
+/*To print the message*/
+.message-container {
+    color: green; /* Or any other color based on the message type */
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
