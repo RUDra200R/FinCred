@@ -472,6 +472,40 @@ footer {
         color:#C7C8CC;
     }
 }
+#loading-message {
+  display: none;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  color: #ffffff;
+  background-color: #007BFF;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}#success-message, #error-message {
+  display: none;
+  text-align: center;
+  font-weight: bold;
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+#success-message {
+  color: #28a745;
+}
+
+#error-message {
+  color: #dc3545;
+}
 
 
     </style>
@@ -519,6 +553,8 @@ footer {
         <button id="deleteButton" class="delete-button">Delete Account</button> 
     </div>
     <div class="container">
+        <div id="success-message" style="display: none;"></div>
+        <div id="error-message" style="display: none;"></div>
         <h1>SplitMate</h1>
         <form id="expense-form">
             <input type="text" id="group-name" placeholder="Group Name" required>
@@ -527,6 +563,7 @@ footer {
             <input type="number" id="num-members" placeholder="Number of Members" required>
             <div id="members-input-container"></div>
             <button type="submit" id="button1">Add Expense & Send Notification</button>
+            <div id="loading-message" style="display: none; text-align: center;">Loading, please wait...</div>
         </form>
     </div>
      <!-- Footer -->
@@ -588,28 +625,37 @@ document.getElementById('num-members').addEventListener('input', (e) => {
     // Event listener for form submission to add a shared expense and send notifications
     document.getElementById('expense-form').addEventListener('submit', async (e) => {
         e.preventDefault();
+        const submitButton = document.getElementById('button1');
+        const loadingMessage = document.getElementById('loading-message');
+        const successMessage = document.getElementById('success-message');
+        const errorMessage = document.getElementById('error-message');
+
+    // Disable the submit button and show loading message
+    submitButton.style.display = 'none'; 
+    loadingMessage.style.display = 'block'; 
+    errorMessage.style.display = 'none'; 
+    successMessage.style.display = 'none';
 
         const groupName = document.getElementById('group-name').value.trim();
         const description = document.getElementById('expense-description').value.trim();
         const amount = parseFloat(document.getElementById('expense-amount').value);
         const emails = Array.from(document.querySelectorAll('.member-email')).map(input => input.value.trim());
 
-        // Validate the amount
-        if (amount <= 0 || isNaN(amount)) {
-    alert('Amount should be greater than 0.');
+        if (amount <= 0) {
+            errorMessage.innerHTML = 'Amount should be greater than 0.'; // Set error message
+            errorMessage.style.display = 'block'; 
     return;
 }
-        // Validate the inputs before making the request
-        if (!groupName || !description || isNaN(amount) || amount <= 0 || emails.some(email => !email)) {
-            alert('Please ensure all fields are filled in correctly.');
-            console.error('Validation failed:', { groupName, description, amount, emails });
-            return;
-        }
+        // // Validate the inputs before making the request
+        // if (!groupName || !description || amount <= 0 || emails.some(email => !email)) {
+        //     alert('Please ensure all fields are filled in correctly.');
+        //     console.error('Validation failed:', { groupName, description, amount, emails });
+        //     return;
+        // }
 
         const expenseData = { groupName, description, amount, emails };
 
         try {
-            // Send a single request to add the expense and notify members
             const response = await fetch('/api/auth/shared-expenses', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -619,19 +665,30 @@ document.getElementById('num-members').addEventListener('input', (e) => {
             const result = await response.json();
             if (response.ok) {
                 clearForm();
-                alert('Expense added and notifications sent successfully!');
+                successMessage.innerHTML = 'Expense added and notifications sent successfully!';
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                successMessage.style.display = 'none'; 
+                    }, 6000);
                 
             } else {
                 console.error('Error response from server:', result);
-                alert(result.message);
+                errorMessage.innerHTML = result.message;
+                errorMessage.style.display = 'block';
             }
         } catch (error) {
             console.error('Error adding expense and sending notifications:', error);
+            errorMessage.innerHTML = 'An error occurred while processing your request.';
+            errorMessage.style.display = 'block';
         }
+
+        finally {
+        submitButton.style.display = 'block';
+        loadingMessage.style.display = 'none';
+    }
     });
 
     function clearForm() {
-        console.log("Clearing form..."); // Debugging step
     
     // Clear static form inputs
     document.getElementById('group-name').value = '';
@@ -639,15 +696,16 @@ document.getElementById('num-members').addEventListener('input', (e) => {
     document.getElementById('expense-amount').value = '';
 
     // Clear the num-members input and members emails
-    document.getElementById('num-members').value = ''; // Clear num-members field
+    document.getElementById('num-members').value = '';
     const membersContainer = document.getElementById('members-input-container');
     
     // Clear dynamically added email fields
     while (membersContainer.firstChild) {
         membersContainer.removeChild(membersContainer.firstChild);
     }
+    document.getElementById('error-message').style.display = 'none';
+    document.getElementById('success-message').style.display = 'none';
     
-    console.log("Dynamic fields cleared"); // Debugging step
 }
 document.addEventListener('DOMContentLoaded', function () {
         const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
