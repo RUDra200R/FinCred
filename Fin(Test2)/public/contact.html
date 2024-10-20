@@ -48,8 +48,8 @@ body {
 .nav-items{
     display: flex;
     flex-direction: row;
-    gap: 30%;
-    margin: 1% auto auto 26.2%;
+    gap: 27%;
+    margin: 1% auto auto 15.2%;
     padding: 0% 23.5% 0% 0%;
     animation: SocialAni 1s ease forwards;
     animation-delay: calc(.2s * var(--socialAni));
@@ -186,7 +186,7 @@ body {
         text-align: center;
         position: absolute;
         top: 88px;
-        left: 38%;
+        left: 60%;
         background-color: rgba(30, 40, 78, 0.5);
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
@@ -504,17 +504,20 @@ footer {
         opacity: 1;
     }
 }
+html{
+    scroll-behavior: smooth;
+}
 .delete-button{
-            background-color: #f44336;
-            color: white;
-            padding: 5px 8px 5px 8px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 10px;
+    background-color: #f44336;
+                color: white;
+                padding: 5px 8px 5px 8px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 10px;
         }
 
         .delete-button:hover{
@@ -543,7 +546,7 @@ footer {
                 <li><a href="/histroy" class="navopt">History</a></li>
                 <li>
                     <!-- Profile Button -->
-                    <button id="profileButton">Profile</button>
+                    <button id="profileButton"><img src="./profileicon.png" alt="err" height="40px" width="40px"></button>
                 </li>
             </ul>
         </nav>

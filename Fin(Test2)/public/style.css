@@ -12,6 +12,9 @@ body {
     image-rendering: -webkit-optimize-contrast; /* For WebKit browsers */
     image-rendering: crisp-edges;
 }
+html{
+    scroll-behavior: smooth;
+}
 
 .container {
     display: flex;

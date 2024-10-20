@@ -259,24 +259,21 @@ const submitContactForm = async (req, res) => {
 //splitMate
 const addExpenseAndNotify = async (req, res) => {
     const { groupName, description, amount, emails } = req.body;
+    const userId = req.userId; // Assuming email is available in the request object
 
     // Check if all required fields are provided and validate types
     if (!groupName || !description || isNaN(amount) || !emails || !Array.isArray(emails) || !emails.length) {
         return res.status(400).json({ message: 'All fields are required and should be valid.' });
     }
-    const useremail = req.email;
-        if (!useremail) {
-            return res.status(400).json({ message: 'Email is required' });
-        }
 
     try {
         // Create a new expense document with the username
         const newExpense = new Expense({
-            useremail,
             groupName,
             description,
             amount,
-            emails
+            emails,
+            userId:userId
         });
 
         await newExpense.save();
@@ -312,14 +309,10 @@ Thank you!`
                 console.error(`Error sending email to ${email}:`, emailError);
             }
         }
-
-        // Fetch all expenses to update the expense list
-        const expenses = await Expense.find();
-
-        // Return a success response with the updated list of expenses
+        // await Promise.all(emailPromises);
+        // Return a success response
         res.status(201).json({
-            message: 'Expense added and notifications sent successfully.',
-            expenses
+            message: 'Expense added and notifications sent successfully.'
         });
     } catch (err) {
         // Return a server error message if something goes wrong
@@ -328,31 +321,20 @@ Thank you!`
     }
 };
 const getExpenses = async (req, res) => {
-    const userEmail = req.email; 
-
-    // Validate the email
-    if (!userEmail || !isValidEmail(userEmail)) {
-        return res.status(400).json({ message: 'A valid email address is required.' });
-    }
-
     try {
-        // Find expenses where the user's email is in the emails array
-        const expenses = await Expense.find({ emails: userEmail });
+        const userId = req.userId;
 
-        // Check if expenses exist for the given email
-        if (expenses.length === 0) {
-            return res.status(404).json({ message: 'No expenses found for this User.' });
+        // Fetch expenses that include the user's email
+        const expenses = await Expense.find({ userId }).sort({ createdAt: -1 }).limit(2);;
+
+        if (!expenses.length) {
+            return res.status(404).json({ message: 'No expenses found for this user.' });
         }
 
-        // Return the found expenses
-        res.status(200).json({
-            message: 'Expenses retrieved successfully.',
-            expenses,
-        });
-    } catch (err) {
-        // Handle server errors
-        console.error('Error retrieving expenses:', err);
-        res.status(500).json({ message: 'Error retrieving expenses.', error: err.message });
+        res.status(200).json(expenses);
+    } catch (error) {
+        console.error('Error fetching expenses:', error);
+        res.status(500).json({ message: 'Error fetching expenses.' });
     }
 };
 

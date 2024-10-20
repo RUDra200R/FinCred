@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const ExpenseSchema = new mongoose.Schema({
-    email: { type: String, required: true },// user email 
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     groupName: {
         type: String,
         required: true,

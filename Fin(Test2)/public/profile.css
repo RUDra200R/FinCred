@@ -1,5 +1,6 @@
 #profileButton {
     background-color: transparent;
+    margin-top: -10px;
     color: white;
     border: none;
     cursor: pointer;
@@ -8,7 +9,7 @@
 .popup {
     display: none;
     position: fixed;
-    top: 30%;
+    top: 35%;
     left: 90%;
     transform: translate(-50%, -50%);
     background-color:transparent blue;
@@ -53,8 +54,9 @@
         
         @media (max-width: 768px) {
             .popup {
-                top: 40%;
-                margin-right: 50%;
-                width: 50vw; /* Adjust for smaller screens */
+                position: absolute;
+                    left: 30%;
+                    top: 40%;
+                    width: 40vw; /* Adjust for smaller screens */
             }
         }

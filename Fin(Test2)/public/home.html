@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="home.css">
 
     <style>
-
+        html{
+    scroll-behavior: smooth;
+}
         body{        
             text-align: center;
             background-image: url("./background.png");
@@ -82,15 +84,15 @@
 
         .delete-button{
             background-color: #f44336;
-            color: white;
-            padding: 5px 8px 5px 8px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 10px;
+                color: white;
+                padding: 5px 8px 5px 8px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 10px;
         }
 
         .delete-button:hover{
@@ -204,7 +206,7 @@
         text-align: center;
         position: absolute;
         top: 88px;
-        left: 38%;
+        left: 60%;
         background-color: rgba(30, 40, 78, 0.5);
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
@@ -233,8 +235,9 @@
 
 }
 /* profile data*/
-        #profileButton {
+     #profileButton {
     background-color: transparent;
+    margin-top: -10px;
     color: white;
     border: none;
     cursor: pointer;
@@ -243,7 +246,7 @@
 .popup {
     display: none;
     position: fixed;
-    top: 30%;
+    top: 35%;
     left: 90%;
     transform: translate(-50%, -50%);
     background-color:transparent blue;
@@ -293,7 +296,10 @@
         /* Add media queries for responsiveness */
         @media (max-width: 768px) {
             .popup {
-                width: 50vw; /* Adjust for smaller screens */
+                position: absolute;
+                    left: 30%;
+                    top: 40%;
+                    width: 50vw;; /* Adjust for smaller screens */
             }
         }
         
@@ -331,7 +337,7 @@
                 <li><a href="/histroy" class="navopt">History</a></li>
                 <li>
                     <!-- Profile Button -->
-                    <button id="profileButton">Profile</button>
+                    <button id="profileButton"><img src="./profileicon.png" alt="err" height="40px" width="40px"></button>
                 </li>
             </ul>
         </nav>

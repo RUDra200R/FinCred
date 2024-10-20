@@ -23,7 +23,7 @@
       padding: 20px;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
-      margin: 20px auto;
+      margin: 80px auto;
     }
     h2 {
       text-align: center;
@@ -94,6 +94,7 @@
     #profileButton {
         background-color: transparent;
         color: white;
+        margin-top: -18px;
         border: none;
         cursor: pointer;
     }
@@ -101,7 +102,7 @@
     .popup {
     display: none;
     position: fixed;
-    top: 30%;
+    top: 35%;
     left: 90%;
     transform: translate(-50%, -50%);
     background-color:transparent blue;
@@ -183,8 +184,8 @@
     .nav-items{
         display: flex;
         flex-direction: row;
-        gap: 30%;
-        margin: 1% auto auto 26.2%;
+        gap: 27%;
+        margin: 1% auto auto 15.2%;
         padding: 0% 23.5% 0% 0%;
         animation: SocialAni 1s ease forwards;
         animation-delay: calc(.2s * var(--socialAni));
@@ -337,7 +338,7 @@
             text-align: center;
             position: absolute;
             top: 88px;
-            left: 38%;
+            left: 60%;
             background-color: rgba(30, 40, 78, 0.5);
             border-bottom-left-radius: 20px;
             border-bottom-right-radius: 20px;
@@ -366,13 +367,15 @@
     
         @media (max-width: 768px) {
         .container {
-            margin-top: 8%;
-            width: 85%;
-            margin-left: 2%;
-            margin-bottom: 8%;
+            margin-top: 15%;
+            width: 60%;
+            margin-bottom: 15%;
         }
     }
     }
+    html{
+    scroll-behavior: smooth;
+}
     /*          Footer          */
     
     footer {
@@ -526,7 +529,7 @@
                 <li><a href="/contact" class="navopt">Contact</a></li>
                 <li><a href="/histroy" class="navopt">History</a></li>
                 <li>
-                    <button id="profileButton">Profile</button>
+                    <button id="profileButton"><img src="./profileicon.png" alt="err" height="40px" width="40px"></button>
                 </li>
             </ul>
         </nav>
@@ -552,14 +555,14 @@
     </div>
     <div class="container">
     <h2>Budget History</h2>
-  <button id="showHistoryBtn">Show History</button>
-  <div id="budgetHistory"></div>
-  <button id="downloadBtn" style="display:none;">Download History</button>
+    <button id="showHistoryBtn">Show History ▼</button>
+    <div id="budgetHistory" style="display:none;"></div>
+    <button id="downloadBtn" style="display:none;">Download History</button>
   <hr>
   <h2>SplitMate History</h2>
-  <button id="showHistory">Show History</button>
-  <div id="splitMatehistroy"></div>
-  <button id="downloadBtn" style="display:none;">Download History</button>
+  <button id="showHistorySplit">Show History ▼</button>
+  <div id="splitMatehistroy" style="display: none;"></div>
+  <button id="downloadBtnsplit" style="display:none;">Download History</button>
 </div>
 
   <footer>
@@ -586,72 +589,95 @@
 <script src="script.js"></script>
     <script src="script1.js"></script>
   <script>
-    // Show history button functionality
-    document.getElementById('showHistoryBtn').addEventListener('click', async () => {
-      try {
-        const response = await fetch('/api/auth/budgets'); // Fetch budgets (adjust URL as needed)
-        const budgets = await response.json();
+// Show history button functionality
+document.getElementById('showHistoryBtn').addEventListener('click', async () => {
+    const budgetHistoryDiv = document.getElementById('budgetHistory');
+    const showHistoryBtn = document.getElementById('showHistoryBtn');
 
-        const budgetHistoryDiv = document.getElementById('budgetHistory');
-        budgetHistoryDiv.innerHTML = ''; // Clear previous content
+    // Toggle visibility and arrow
+    if (budgetHistoryDiv.style.display === 'none' || budgetHistoryDiv.style.display === '') {
+        // If currently hidden, show history and change button to "Hide History"
+        budgetHistoryDiv.style.display = 'block';
+        showHistoryBtn.innerHTML = 'Hide History ▲';
 
-        budgets.forEach(budget => {
-          const budgetEntry = document.createElement('div');
-          budgetEntry.innerHTML = `
-            <p><strong>Total Income:</strong> ${budget.income}</p>
-            <p><strong>Housing:</strong> ${budget.housing}</p>
-            <p><strong>Food:</strong> ${budget.food}</p>
-            <p><strong>Transportation:</strong> ${budget.transportation}</p>
-            <p><strong>Education:</strong> ${budget.education}</p>
-            <p><strong>Healthcare:</strong> ${budget.healthcare}</p>
-            <p><strong>Personal:</strong> ${budget.personal}</p>
-            <p><strong>Savings:</strong> ${budget.savings}</p>
-            <p><strong>Total Expense:</strong> ${budget. totalExpenses}</p>
-            <p><strong>Remaining Money:</strong> ${budget.remainingMoney}</p>
-            <hr>
-          `;
-          budgetHistoryDiv.appendChild(budgetEntry);
-        });
+        try {
+            const response = await fetch('/api/auth/budgets'); // Fetch budgets (adjust URL as needed)
+            const budgets = await response.json();
 
-        // Show the download button now that history is displayed
-        document.getElementById('downloadBtn').style.display = 'block';
+            budgetHistoryDiv.innerHTML = ''; // Clear previous content
 
-      } catch (error) {
-        console.error('Error fetching budget history:', error);
-      }
-    });
+            budgets.forEach(budget => {
+                const budgetEntry = document.createElement('div');
+                budgetEntry.innerHTML = `
+                    <p><strong>Total Income:</strong> ${budget.income}</p>
+                    <p><strong>Housing:</strong> ${budget.housing}</p>
+                    <p><strong>Food:</strong> ${budget.food}</p>
+                    <p><strong>Transportation:</strong> ${budget.transportation}</p>
+                    <p><strong>Education:</strong> ${budget.education}</p>
+                    <p><strong>Healthcare:</strong> ${budget.healthcare}</p>
+                    <p><strong>Personal:</strong> ${budget.personal}</p>
+                    <p><strong>Savings:</strong> ${budget.savings}</p>
+                    <p><strong>Total Expense:</strong> ${budget.totalExpenses}</p>
+                    <p><strong>Remaining Money:</strong> ${budget.remainingMoney}</p>
+                    <p><strong>Created At:</strong> ${budget.createdAt}</p>
+                    <hr>
+                `;
+                budgetHistoryDiv.appendChild(budgetEntry);
+            });
 
-    // Download history as CSV
-    document.getElementById('downloadBtn').addEventListener('click', () => {
-      const budgetHistoryDiv = document.getElementById('budgetHistory');
-      const rows = budgetHistoryDiv.querySelectorAll('div');
+            // Show the download button now that history is displayed
+            document.getElementById('downloadBtn').style.display = 'block';
 
-      let csvContent = "data:text/csv;charset=utf-8,Total Income,Housing,Food,Transportation,Education,Healthcare,Personal,Savings,Total Expense,Remaining Money\n";
+        } catch (error) {
+            console.error('Error fetching budget history:', error);
+        }
 
-      rows.forEach(row => {
+    } else {
+        // If currently shown, hide history and change button to "Show History"
+        budgetHistoryDiv.style.display = 'none';
+        showHistoryBtn.innerHTML = 'Show History ▼';
+        document.getElementById('downloadBtn').style.display = 'none'; // Hide the download button
+    }
+});
+
+// Download history as CSV
+document.getElementById('downloadBtn').addEventListener('click', () => {
+    const budgetHistoryDiv = document.getElementById('budgetHistory');
+    const rows = budgetHistoryDiv.querySelectorAll('div');
+
+    let csvContent = "data:text/csv;charset=utf-8,Total Income,Housing,Food,Transportation,Education,Healthcare,Personal,Savings,Total Expense,Remaining Money,Created At\n";
+
+    rows.forEach(row => {
         const texts = row.querySelectorAll('p');
         const data = Array.from(texts).map(text => text.innerText.split(': ')[1]);
         csvContent += data.join(',') + "\n";
-      });
-
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement('a');
-      link.setAttribute('href', encodedUri);
-      link.setAttribute('download', 'budget_history.csv');
-      document.body.appendChild(link);
-
-      link.click();
-      document.body.removeChild(link); // Remove the link after download
     });
 
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'budget_history.csv');
+    document.body.appendChild(link);
+
+    link.click();
+    document.body.removeChild(link); // Remove the link after download
+});
+
     // splitMate
-    // Show history button functionality for SplitMate expenses
-    document.getElementById('showHistory').addEventListener('click', async () => {
+    document.getElementById('showHistorySplit').addEventListener('click', async () => {
+    const expenseHistoryDiv = document.getElementById('splitMatehistroy');
+    const showHistorySplitBtn = document.getElementById('showHistorySplit');
+    
+    // Toggle visibility and arrow
+    if (expenseHistoryDiv.style.display === 'none' || expenseHistoryDiv.style.display === '') {
+        // If hidden, show history and change button to "Hide History"
+        expenseHistoryDiv.style.display = 'block';
+        showHistorySplitBtn.innerHTML = 'Hide History ▲';
+        
         try {
             const response = await fetch('/api/auth/expense'); // Fetch expenses
             const expenses = await response.json();
 
-            const expenseHistoryDiv = document.getElementById('splitMatehistroy');
             expenseHistoryDiv.innerHTML = ''; // Clear previous content
 
             expenses.forEach(expense => {
@@ -661,41 +687,51 @@
                     <p><strong>Description:</strong> ${expense.description}</p>
                     <p><strong>Amount:</strong> ₹${expense.amount.toFixed(2)}</p>
                     <p><strong>Members:</strong> ${expense.emails.join(', ')}</p>
+                    <p><strong>Created At:</strong> ${new Date(expense.createdAt).toLocaleString()}</p>
                     <hr>
                 `;
                 expenseHistoryDiv.appendChild(expenseEntry);
             });
 
             // Show the download button now that history is displayed
-            document.getElementById('downloadBtn').style.display = 'block';
+            document.getElementById('downloadBtnsplit').style.display = 'block';
 
         } catch (error) {
             console.error('Error fetching expense history:', error);
         }
+
+    } else {
+        // If shown, hide history and change button to "Show History"
+        expenseHistoryDiv.style.display = 'none';
+        showHistorySplitBtn.innerHTML = 'Show History ▼';
+        
+        // Hide the download button when history is hidden
+        document.getElementById('downloadBtnsplit').style.display = 'none';
+    }
+});
+
+// Download expense history as CSV
+document.getElementById('downloadBtnsplit').addEventListener('click', () => {
+    const expenseHistoryDiv = document.getElementById('splitMatehistroy');
+    const rows = expenseHistoryDiv.querySelectorAll('div');
+
+    let csvContent = "data:text/csv;charset=utf-8,Group Name,Description,Amount,Members,Created At\n";
+
+    rows.forEach(row => {
+        const texts = row.querySelectorAll('p');
+        const data = Array.from(texts).map(text => text.innerText.split(': ')[1]);
+        csvContent += data.join(',') + "\n";
     });
 
-    // Download expense history as CSV
-    document.getElementById('downloadBtn').addEventListener('click', () => {
-        const expenseHistoryDiv = document.getElementById('splitMatehistroy');
-        const rows = expenseHistoryDiv.querySelectorAll('div');
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement('a');
+    link.setAttribute('href', encodedUri);
+    link.setAttribute('download', 'splitMate_history.csv');
+    document.body.appendChild(link);
 
-        let csvContent = "data:text/csv;charset=utf-8,Group Name,Description,Amount,Members\n";
-
-        rows.forEach(row => {
-            const texts = row.querySelectorAll('p');
-            const data = Array.from(texts).map(text => text.innerText.split(': ')[1]);
-            csvContent += data.join(',') + "\n";
-        });
-
-        const encodedUri = encodeURI(csvContent);
-        const link = document.createElement('a');
-        link.setAttribute('href', encodedUri);
-        link.setAttribute('download', 'splitMate_history.csv');
-        document.body.appendChild(link);
-
-        link.click();
-        document.body.removeChild(link); // Remove the link after download
-    });
+    link.click();
+    document.body.removeChild(link); // Remove the link after download
+});
 
     document.addEventListener('DOMContentLoaded', function () {
         const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
