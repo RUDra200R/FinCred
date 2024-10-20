@@ -59,7 +59,7 @@ const login = async (req, res) => {
         const token = jwt.sign(
             { userId: user._id , email: user.email}, 
             process.env.JWT_SECRET || 'Romil', 
-            { expiresIn: '1h' }
+            { expiresIn: '3h' }
         );
         res.cookie('token', token, { httpOnly: true });
         res.status(200).json({ message: 'Logged in successfully' });
