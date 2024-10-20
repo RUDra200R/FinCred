@@ -519,7 +519,7 @@ footer {
         <button id="deleteButton" class="delete-button">Delete Account</button> 
     </div>
     <div class="container">
-        <h1>Shared Expenses Tracker</h1>
+        <h1>SplitMate</h1>
         <form id="expense-form">
             <input type="text" id="group-name" placeholder="Group Name" required>
             <input type="text" id="expense-description" placeholder="Expense Description" required>
@@ -618,8 +618,9 @@ document.getElementById('num-members').addEventListener('input', (e) => {
 
             const result = await response.json();
             if (response.ok) {
+                clearForm();
                 alert('Expense added and notifications sent successfully!');
-                renderExpenses(result.expenses);
+                
             } else {
                 console.error('Error response from server:', result);
                 alert(result.message);
@@ -629,44 +630,25 @@ document.getElementById('num-members').addEventListener('input', (e) => {
         }
     });
 
-//     // Fetch existing expenses from the server
-//     async function fetchExpenses() {
-//     try {
-//         const response = await fetch('/api/auth/shared-expenses');
-//         const data = await response.json();
-//         if (response.ok) {
-//             renderExpenses(data.expenses);
-//         } else {
-//             console.error('Error fetching expenses:', data);
-//         }
-//     } catch (error) {
-//         console.error('Error fetching expenses:', error);
-//     }
-// }
-
-// // Render only the last three expenses onto the page
-// function renderExpenses(expenses) {
-//     const expenseList = document.getElementById('expense-list');
-//     expenseList.innerHTML = '';
-
-//     // Get the last three expenses
-//     const lastThreeExpenses = expenses.slice(-3);
+    function clearForm() {
+        console.log("Clearing form..."); // Debugging step
     
-//     lastThreeExpenses.forEach(expense => {
-//         const div = document.createElement('div');
-//         div.className = 'expense-item';
-//         div.innerHTML = `
-//             <div>${expense.groupName} - ${expense.description}</div>
-//             <div>₹${expense.amount.toFixed(2)} (Split among: ${expense.emails.length} members)</div>
-//         `;
-//         expenseList.appendChild(div);
-//     });
-// }
+    // Clear static form inputs
+    document.getElementById('group-name').value = '';
+    document.getElementById('expense-description').value = '';
+    document.getElementById('expense-amount').value = '';
 
-// // Initial fetch of expenses when the page loads
-// fetchExpenses();
-
-
+    // Clear the num-members input and members emails
+    document.getElementById('num-members').value = ''; // Clear num-members field
+    const membersContainer = document.getElementById('members-input-container');
+    
+    // Clear dynamically added email fields
+    while (membersContainer.firstChild) {
+        membersContainer.removeChild(membersContainer.firstChild);
+    }
+    
+    console.log("Dynamic fields cleared"); // Debugging step
+}
 document.addEventListener('DOMContentLoaded', function () {
         const mobileMenuIcon = document.querySelector('.mobile-menu-icon');
         const navItems = document.querySelector('.nav-items');
@@ -676,7 +658,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       });
 </script>
-
-    </script>
 </body>
 </html>
